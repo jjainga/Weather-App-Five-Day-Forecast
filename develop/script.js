@@ -16,7 +16,7 @@ function newButton () {
     nextCity.addClass(cityList[i]);
     nextCity.addClass("button");
     nextCity.addClass("cityBtn");
-    nextCity.addClass("cityBtnStyle")
+    // nextCity.addClass("cityBtnStyle")
     nextCity.attr("id", cityList[i]);
     nextCity.attr("type", "button")
     nextCity.text(cityList[i]);
@@ -71,7 +71,7 @@ function getList () {
 $(".cityBtn").on("click", function getInfo() {
 var cityName = $(this).attr("id");
     console.log(cityName);
-var queryUrl = "http://api.openweathermap.org/data/2.5/weather?q=" +cityName+"&APPID=5327fb59791319226e02244852ddbabb";
+var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" +cityName+"&APPID=5327fb59791319226e02244852ddbabb";
 $.ajax({
     url: queryUrl,
     method: "GET"
