@@ -1,0 +1,25 @@
+/* Sidebar style */
+#buttonLocation {
+    background-color: gray;
+    width: 10%;
+    height: 100%vw;
+    margin-top: 10px;
+    margin-right: 10px;
+    padding: 10px;
+
+}
+.cityBtnStyle {
+
+}
+
+/* Weather Display Style */
+#weatherInfo {
+    background-color: darkblue;
+    border: 1px solid whitesmoke;
+    box-shadow: 5px 5px lightblue;
+    color: whitesmoke;
+    width: 75%vw;
+    height: 20%vw;
+    margin-top: 10px;
+    padding: 5px;
+}
