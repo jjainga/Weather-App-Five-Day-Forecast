@@ -6,6 +6,7 @@ var cityList = [];
 //Functions
 getList();
 newCity ();
+//TODO:// Toggle between display for weather hub
 //Dynamically creates buttons from localStorage
 function newButton () {
     for(var i = 0; i < cityList.length; i++) {
@@ -123,19 +124,27 @@ $.ajax({
 }).then(function(response) {
 //TODO://Create display for 5 day  forecast
     console.log(response);
-var fiveDayGroup = $("<section>");
-    fiveDayGroup.addClass("grid-x")
-//loop for each day
-for (var i = 0; i <= response.list.length; i + 8 ) {
-if ( i > 40) {
-    break;
-}
-else{
+var fiveDayGroup = $("#fiveDayGroup");
+    
+fiveDayGroup.empty();
+//arrary for day names
+var dayOfWeekArr = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+var currentDay = String(moment().format('dddd'));
+        console.log(currentDay);
+        console.log(dayOfWeekArr);
+        //Create for loop to create each day's forecast
+for (var i = 0; i < response.list.length; i = i + 8 ) {
+    var dayofWeekIndex = (i / 8) + 1;
+        console.log(dayofWeekIndex);
+    var currentDayIndex = dayOfWeekArr.indexOf(currentDay);
+        console.log(currentDayIndex);
+    var forecastIndex = currentDayIndex + dayofWeekIndex; 
+        console.log(i);
     var dayForecast = $("<div>");
-        dayForecast.addClass("cell").attr("style", "display: inline-block");
-        dayForecast.attr("id", response.list[i].dt_txt)
+        dayForecast.addClass("cell medium-2").attr("style", "display: inline-block");
+        dayForecast.attr("id", "fiveDayForecast")
 //Creating header and icons
-    var dayOfWeek = $("<h2>").text(response.list[i].dt_text);
+    var dayOfWeek = $("<h4>").text(dayOfWeekArr[forecastIndex]);
     var iconPic = $("<img>").attr("src", "https://api.openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png");
     var tempMax = $("<h5>");
     var tempMin = $("<h5>");
@@ -150,8 +159,9 @@ else{
         tempMin.text(minTempF + "\xB0" + "F" + "/" + minTempC + "\xB0" + "C")
 //Getting humidity
     var humidityForecast = $("<h5>");
-        humidityForecast.text(response.list[i].main.humidity + "%");
+        humidityForecast.text("Humidity: " + response.list[i].main.humidity + "%");
 //Appending forcast to the page
+
 dayForecast.append(dayOfWeek);
 dayForecast.append(iconPic);
 dayForecast.append(tempMax);
@@ -159,8 +169,8 @@ dayForecast.append(tempMin);
 dayForecast.append(humidityForecast);
 
 fiveDayGroup.append(dayForecast);
-}}
-$("#mainGrid").append(fiveDayGroup);
+}
+$("#weatherInfoHub").append(fiveDayGroup);
 })}
 
 
