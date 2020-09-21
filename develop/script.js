@@ -126,7 +126,11 @@ $.ajax({
 var fiveDayGroup = $("<section>");
     fiveDayGroup.addClass("grid-x")
 //loop for each day
-for (var i = 0; i <= response.list.length; i + 8) {
+for (var i = 0; i <= response.list.length; i + 8 ) {
+if ( i > 40) {
+    break;
+}
+else{
     var dayForecast = $("<div>");
         dayForecast.addClass("cell").attr("style", "display: inline-block");
         dayForecast.attr("id", response.list[i].dt_txt)
@@ -136,9 +140,9 @@ for (var i = 0; i <= response.list.length; i + 8) {
     var tempMax = $("<h5>");
     var tempMin = $("<h5>");
 //Converting kelvin to F/C
-    var maxTempF = (Math.floor(response.list[i].main.temp_min - 273.15) * 1.8 + 32); 
-    var maxTempC = Math.floor(response.list[i].main.temp_min - 273.15);
-    var minTempF = (Math.floor(response.list[i].main.temp_min - 273.15) * 1.8 + 32); 
+    var maxTempF = Math.floor((response.list[i].main.temp_max - 273.15) * 1.8 + 32); 
+    var maxTempC = Math.floor(response.list[i].main.temp_max - 273.15);
+    var minTempF = Math.floor((response.list[i].main.temp_min - 273.15) * 1.8 + 32); 
     var minTempC =  Math.floor(response.list[i].main.temp_min - 273.15);
         console.log(maxTempF, minTempF, maxTempC, minTempC);
 //Setting temp values
@@ -155,7 +159,7 @@ dayForecast.append(tempMin);
 dayForecast.append(humidityForecast);
 
 fiveDayGroup.append(dayForecast);
-}
+}}
 $("#mainGrid").append(fiveDayGroup);
 })}
 
@@ -164,11 +168,3 @@ $("#mainGrid").append(fiveDayGroup);
 $(".top-bar").on("click", "#searchBtn", newCity)
 $(".cityBtn").on("click", getInfo);
 $(".cityBtn").on("click", fiveDay);
-
-
-
-
-
-//TODO:// Create layout for city selected
-
-//TODO:// Create layout for five day forecast for the city selected
