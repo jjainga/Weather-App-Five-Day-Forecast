@@ -80,13 +80,16 @@ $.ajax({
 //TODO:// Create layout for city selected
     console.log(response);
     var weatherDisplay = $("<div>");
-    weatherDisplay.addClass("cell auto");
+        weatherDisplay.addClass("cell auto");
+    //Creating time display for current day and time information
+    var timeDisplay = $("<div>");
+        timeDisplay.addClass("cell auto");
     //Getting Name of location
     var locationName = $("<h1>");
         locationName.text(response.name);
     //Creating cell to hold temp and icon picture
     var tempIconDisplay = $("<div>");
-    tempIconDisplay.addClass("cell")
+        tempIconDisplay.addClass("cell")
     //Getting Temp of location and converting to bot imperial and metric
     var tempDisplay = $("<h4>").attr("style", "display: inline-block");
     var locationTemp = response.main.temp;
@@ -96,11 +99,18 @@ $.ajax({
         tempDisplay.text(imperialTemp + "\xB0" + "F" + "/" + metricTemp + "\xB0" + "C");
     //Getting weather icon
     var weartherIcon = $("<img>").attr("style", "display: inline-block");
-    weartherIcon.attr("src", "https://api.openweathermap.org/img/w/" + response.weather[0].icon + ".png");
+        weartherIcon.attr("src", "https://api.openweathermap.org/img/w/" + response.weather[0].icon + ".png");
     //Getting humidity
     var locationHumidity = $("<p>")
     var humidity = response.main.humidity;
         locationHumidity.text("Humidity: " + humidity + "%");
+    //Creating Header for today
+    var todayText = $("<h1>");
+        todayText.text("Today");
+    //Creating tag for current day and time
+    var currentTime = $("<h5>");
+        currentTime.text(moment().format('LLLL'))
+    
 
 
 $("#weatherInfo").empty();
