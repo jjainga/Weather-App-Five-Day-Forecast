@@ -5,8 +5,7 @@ var cityList = [];
 
 //Functions
 getList();
-newCity ();
-//TODO:// Toggle between display for weather hub
+newCity();
 //Dynamically creates buttons from localStorage
 function newButton () {
     for(var i = 0; i < cityList.length; i++) {
@@ -17,7 +16,7 @@ function newButton () {
     nextCity.addClass(cityList[i]);
     nextCity.addClass("button");
     nextCity.addClass("cityBtn");
-    // nextCity.addClass("cityBtnStyle")
+
     nextCity.attr("id", cityList[i]);
     nextCity.attr("type", "button")
     nextCity.text(cityList[i]);
@@ -26,7 +25,6 @@ function newButton () {
     //Appending buttons to sidebar
     buttonDiv.append(nextCity);
     $("#buttonLocation").append(buttonDiv);
-
 }}
 
 //Prin new buttons
@@ -79,11 +77,15 @@ $.ajax({
 }).then(function(response) {
 //TODO:// Create layout for city selected
     console.log(response);
+    var weatherGrid = $("<div>");
+        weatherGrid.addClass("grid-x")
     var weatherDisplay = $("<div>");
-        weatherDisplay.addClass("cell auto");
+        weatherDisplay.addClass("cell medium-8 medium-cell-block-y");
     //Creating time display for current day and time information
     var timeDisplay = $("<div>");
-        timeDisplay.addClass("cell auto");
+        timeDisplay.addClass("cell medium-4 medium-cell-block-y")
+        timeDisplay.attr("style", "float: right");
+        timeDisplay.attr("style", "text-align: right");
     //Getting Name of location
     var locationName = $("<h1>");
         locationName.text(response.name);
@@ -109,18 +111,32 @@ $.ajax({
         todayText.text("Today");
     //Creating tag for current day and time
     var currentTime = $("<h5>");
-        currentTime.text(moment().format('LLLL'))
-    
-
-
+        currentTime.text(moment().format('llll'))
+    //Creating tag for sunrise and sunset
+    var sunriseP = $("<p>");
+    var sunsetP = $("<p>");
+    var sunriseTime = new Date((response.sys.sunrise * 1000)).toString();
+    var sunsetTime = new Date((response.sys.sunset * 1000)).toString();
+        
+        console.log(sunriseTime)
+        sunriseP.text("Sunrise: " + sunriseTime[16] + sunriseTime[17] + sunriseTime[18] + sunriseTime[19] + sunriseTime[20]);
+        sunsetP.text("Sunset: " + sunsetTime[16] + sunsetTime[17] + sunsetTime[18] + sunsetTime[19] + sunsetTime[20]);
+        console.log(new Date((response.sys.sunrise * 1000)).toString());
 $("#weatherInfo").empty();
+//Appending Weather Info
 weatherDisplay.append(locationName);
 weatherDisplay.append(tempIconDisplay);
 weatherDisplay.append(locationHumidity);
 tempIconDisplay.append(tempDisplay);
 tempIconDisplay.append(weartherIcon);
-
-$("#weatherInfo").append(weatherDisplay);
+//Appending time Info
+timeDisplay.append(todayText);
+timeDisplay.append(currentTime);
+timeDisplay.append(sunriseP);
+timeDisplay.append(sunsetP);
+weatherGrid.append(weatherDisplay);
+weatherGrid.append(timeDisplay);
+$("#weatherInfo").append(weatherGrid);
 })}
 
 //TODO:// Create Five day forecast for selected city
@@ -168,7 +184,7 @@ for (var i = 0; i < response.list.length; i = i + 8 ) {
         tempMax.text(maxTempF + "\xB0" + "F" + "/" + maxTempC + "\xB0" + "C")
         tempMin.text(minTempF + "\xB0" + "F" + "/" + minTempC + "\xB0" + "C")
 //Getting humidity
-    var humidityForecast = $("<h5>");
+    var humidityForecast = $("<p>");
         humidityForecast.text("Humidity: " + response.list[i].main.humidity + "%");
 //Appending forcast to the page
 
@@ -186,5 +202,5 @@ $("#weatherInfoHub").append(fiveDayGroup);
 
 //Click event to push citys into cityList array
 $(".top-bar").on("click", "#searchBtn", newCity)
-$(".cityBtn").on("click", getInfo);
-$(".cityBtn").on("click", fiveDay);
+$("#buttonLocation").on("click", ".cityBtn", getInfo);
+$("#buttonLocation").on("click", ".cityBtn", fiveDay);
