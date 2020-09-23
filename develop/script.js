@@ -1,4 +1,4 @@
-//TODO: // Create buttons for each city
+// Create buttons for each city
 console.log("Hello");
 var cityInput = $("#search").val();
 var cityList = [];
@@ -48,13 +48,13 @@ function newCity () {
         newButton();
     }}
 
-//TODO:// Store buttons in local storage
+// Store buttons in local storage
 function saveCity () {
     var savedList = JSON.stringify(cityList);
         console.log(savedList);
     localStorage.setItem("Location", savedList);
 }
-//TODO:// Pull from localstorage
+// Pull from localstorage
 function getList () {
     var locationList = JSON.parse(localStorage.getItem("Location"));
     if(locationList != null) {
@@ -66,7 +66,7 @@ function getList () {
 
     }}
 
-//TODO: // Create ajax request to pull information
+// Create ajax request to pull information
 function getInfo() {
 var cityName = $(this).attr("id");
     console.log(cityName);
@@ -75,7 +75,7 @@ $.ajax({
     url: queryUrl,
     method: "GET"
 }).then(function(response) {
-//TODO:// Create layout for city selected
+// Create layout for city selected
     console.log(response);
     var weatherGrid = $("<div>");
         weatherGrid.addClass("grid-x")
@@ -139,7 +139,7 @@ weatherGrid.append(timeDisplay);
 $("#weatherInfo").append(weatherGrid);
 })}
 
-//TODO:// Create Five day forecast for selected city
+// Create Five day forecast for selected city
 function fiveDay() {
     var cityName = $(this).attr("id");
     console.log(cityName);
@@ -148,7 +148,7 @@ $.ajax({
     url: queryUrl,
     method: "GET"    
 }).then(function(response) {
-//TODO://Create display for 5 day  forecast
+//Create display for 5 day  forecast
     console.log(response);
 var fiveDayGroup = $("#fiveDayGroup");
     
@@ -158,14 +158,17 @@ var dayOfWeekArr = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Fri
 var currentDay = String(moment().format('dddd'));
         console.log(currentDay);
         console.log(dayOfWeekArr);
-        //Create for loop to create each day's forecast
+//Create for loop to create each day's forecast
 for (var i = 0; i < response.list.length; i = i + 8 ) {
+//Create index to select what day of the week each display is
     var dayofWeekIndex = (i / 8) + 1;
         console.log(dayofWeekIndex);
+//Determine where the current day is within the dayOfWeekArr
     var currentDayIndex = dayOfWeekArr.indexOf(currentDay);
         console.log(currentDayIndex);
+//Select the day of week for each display
     var forecastIndex = currentDayIndex + dayofWeekIndex; 
-        console.log(i);
+//Create new div for each display to live in
     var dayForecast = $("<div>");
         dayForecast.addClass("cell medium-2").attr("style", "display: inline-block");
         dayForecast.attr("id", "fiveDayForecast")
@@ -186,16 +189,16 @@ for (var i = 0; i < response.list.length; i = i + 8 ) {
 //Getting humidity
     var humidityForecast = $("<p>");
         humidityForecast.text("Humidity: " + response.list[i].main.humidity + "%");
-//Appending forcast to the page
-
+//Appending forcast to the new div
 dayForecast.append(dayOfWeek);
 dayForecast.append(iconPic);
 dayForecast.append(tempMax);
 dayForecast.append(tempMin);
 dayForecast.append(humidityForecast);
-
+//Appending section
 fiveDayGroup.append(dayForecast);
 }
+//Appending to page
 $("#weatherInfoHub").append(fiveDayGroup);
 })}
 
