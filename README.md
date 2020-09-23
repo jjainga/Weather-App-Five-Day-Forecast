@@ -4,7 +4,7 @@ Here you can use this app to check your local weather forecast!
 
 At the top there is a search input to look for your city of interest
 
-<img src="./img/search_bar.PNG" alt="picture of search bar">
+<img src="./img/Search_bar.PNG" alt="picture of search bar">
 
 All the citys you search will be svaed on the left of the page, so you can easily check up on them in the future!
 
